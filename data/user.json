@@ -12,5 +12,12 @@
     "password": "$2b$10$Q3QpfGbLmDjsZldMN3UQleQVapzTz7aFExmmzRfMdkKbIYaqBBiMq",
     "nickname": "newnickname1",
     "profile_image": "public/images/profile/default_profile_img.webp"
+  },
+  {
+    "id": 4,
+    "email": "newuser3@example.com",
+    "password": "$2b$10$b/VnZcFA.O0k7RWSyvr41Oo1esanHDBAHZSWERoVoeIAGQdZqvtFu",
+    "nickname": "newnickname3",
+    "profile_image": "public/images/profile/default_profile_img.webp"
   }
 ]
