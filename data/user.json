@@ -1,0 +1,16 @@
+[
+  {
+    "id": 2,
+    "email": "newuser2@example.com",
+    "password": "$2b$10$l1TlXPdEYW7A9N6g2nU1Ue6dIJK5PzLtjQzIGnjQyD7r6G/k7wVaW",
+    "nickname": "newnickname2",
+    "profile_image": "public/images/default_profile_img.webp"
+  },
+  {
+    "id": 3,
+    "email": "newuser1@example.com",
+    "password": "$2b$10$Q3QpfGbLmDjsZldMN3UQleQVapzTz7aFExmmzRfMdkKbIYaqBBiMq",
+    "nickname": "newnickname1",
+    "profile_image": "public/images/profile/default_profile_img.webp"
+  }
+]
