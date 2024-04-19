@@ -41,6 +41,9 @@ app.use((err, req, res, next) => {
     next(); // 다음 미들웨어로 이동
   }
 });
+// 정적 파일 경로 설정
+app.use("/images", express.static("public/images"));
+// http://localhost:3000/images/profile/default_profile_img.webp 에 접근하면 프로필 기본 사진임
 
 const PORT = process.env.PORT || 3000; // 서버 포트 설정
 app.listen(PORT, () => {

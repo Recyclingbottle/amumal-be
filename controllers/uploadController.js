@@ -30,12 +30,15 @@ const upload = multer({ storage: storage });
 // 단일 이미지 업로드를 처리하는 미들웨어
 exports.uploadImage = upload.single("image");
 
-// 파일 업로드 응답 처리 컨트롤러
 exports.saveImage = (req, res) => {
   if (req.file) {
+    // 호스트 주소와 파일 경로를 결합하여 외부에서 접근 가능한 URL 생성
+    const fileUrl = `${req.protocol}://${req.get("host")}/images/${
+      req.file.path.split("public/images/")[1]
+    }`;
     res.json({
       message: "File uploaded successfully",
-      path: req.file.path,
+      url: fileUrl, // 클라이언트에게 파일 URL 반환
     });
   } else {
     res.status(400).json({ message: "No file uploaded" });
