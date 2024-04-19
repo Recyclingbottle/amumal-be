@@ -32,10 +32,15 @@ exports.login = async (req, res) => {
   const user = await userModel.validateUser(email, password);
 
   if (user) {
-    // 사용자가 검증되면 JWT 토큰 생성
-    const token = jwt.sign({ userId: user.email }, secretKey, {
-      expiresIn: "1h",
-    });
+    // 사용자가 검증되면, 사용자 정보를 바탕으로 JWT 토큰 생성
+    const tokenData = {
+      userId: user.email, // 사용자 ID 인데 제거해야하나 다른데서 불러왔을 수도 있으니 삭제하지 않음
+      email: user.email, // 사용자 이메일
+      nickname: user.nickname, // 사용자 닉네임
+      profileImage: user.profile_image, // 사용자 프로필 이미지 경로
+    };
+    const token = jwt.sign(tokenData, secretKey, { expiresIn: "1h" });
+
     res.status(HTTP_STATUS.OK).json({ message: "로그인 성공", token });
   } else {
     res
