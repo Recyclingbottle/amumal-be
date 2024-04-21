@@ -32,13 +32,11 @@ exports.uploadImage = upload.single("image");
 
 exports.saveImage = (req, res) => {
   if (req.file) {
-    // 호스트 주소와 파일 경로를 결합하여 외부에서 접근 가능한 URL 생성
-    const fileUrl = `${req.protocol}://${req.get("host")}/images/${
-      req.file.path.split("public/images/")[1]
-    }`;
+    // 파일명만 추출 (경로에서 마지막 부분)
+    const filename = path.basename(req.file.path);
     res.json({
       message: "File uploaded successfully",
-      url: fileUrl, // 클라이언트에게 파일 URL 반환
+      filename: filename, // 클라이언트에게 업로드된 파일명 반환
     });
   } else {
     res.status(400).json({ message: "No file uploaded" });

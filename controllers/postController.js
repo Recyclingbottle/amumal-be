@@ -72,7 +72,7 @@ exports.deletePost = async (req, res) => {
   }
 
   const post = posts[postIndex]; // 해당 게시글 데이터
-  if (post.author.email !== req.user.userId) {
+  if (post.author.email !== req.user.email) {
     // 게시글 작성자와 요청자의 이메일 비교
     return res
       .status(403)
@@ -100,7 +100,7 @@ exports.editPost = async (req, res) => {
   }
 
   // 작성자 확인 로직
-  if (postDetails.author.email !== req.user.userId) {
+  if (postDetails.author.email !== req.user.email) {
     return res.status(403).json({ message: "수정 권한이 없습니다." });
   }
 
@@ -116,12 +116,12 @@ exports.editPost = async (req, res) => {
 // 댓글 추가 요청 처리
 exports.addCommentToPost = async (req, res) => {
   const { postId } = req.params;
-  const { email, nickname, profile_image } = req.user; // JWT 토큰에서 사용자 정보 추출
+  const { email, nickname, profileImage } = req.user; // JWT 토큰에서 사용자 정보 추출
   const commentData = {
     author: {
       email,
       nickname,
-      profile_image,
+      profileImage,
     },
     content: req.body.content,
   };
@@ -174,7 +174,8 @@ exports.editComment = async (req, res) => {
 exports.deleteComment = async (req, res) => {
   const { postId, commentId } = req.params;
   const userEmail = req.user.email;
-
+  console.log(postId, commentId);
+  console.log(userEmail);
   const success = postModel.deleteComment(postId, commentId, userEmail);
   if (!success) {
     return res.status(404).json({

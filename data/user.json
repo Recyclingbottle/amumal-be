@@ -1,23 +1,16 @@
 [
   {
+    "id": 1,
+    "email": "hoholeo382@gmail.com",
+    "password": "$2b$10$Bo27Y9/60HqBleLtcJAUAObccJlnUiUGCJJYY8Ak8slfqb5ZMtTS6",
+    "nickname": "TEST32323",
+    "profile_image": "12341481.jpg"
+  },
+  {
     "id": 2,
-    "email": "newuser2@example.com",
-    "password": "$2b$10$l1TlXPdEYW7A9N6g2nU1Ue6dIJK5PzLtjQzIGnjQyD7r6G/k7wVaW",
-    "nickname": "newnickname2",
-    "profile_image": "public/images/default_profile_img.webp"
-  },
-  {
-    "id": 3,
-    "email": "newuser1@example.com",
-    "password": "$2b$10$Q3QpfGbLmDjsZldMN3UQleQVapzTz7aFExmmzRfMdkKbIYaqBBiMq",
-    "nickname": "newnickname1",
-    "profile_image": "public/images/profile/default_profile_img.webp"
-  },
-  {
-    "id": 4,
-    "email": "newuser3@example.com",
-    "password": "$2b$10$b/VnZcFA.O0k7RWSyvr41Oo1esanHDBAHZSWERoVoeIAGQdZqvtFu",
-    "nickname": "newnickname3",
-    "profile_image": "public/images/profile/default_profile_img.webp"
+    "email": "test01@gmail.com",
+    "password": "$2b$10$7T5Zj2WJavJ6caTsueKEKuvLeN4dljWkJy077dc/yE/kKf8BPpP9e",
+    "nickname": "TEST01",
+    "profile_image": "1713680139082.jpg"
   }
 ]

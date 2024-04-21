@@ -65,12 +65,13 @@ exports.updatePost = (postId, updateData) => {
   }
 
   const post = postsData.posts[postIndex];
+  console.log(post);
   // 제목, 내용, 사진 데이터를 업데이트
   postsData.posts[postIndex] = {
     ...post,
     title: updateData.title || post.title,
     content: updateData.content || post.content,
-    images: updateData.images || post.images,
+    post_image: updateData.images ? updateData.images[0] : post.post_image, // 이미지가 리스트로 제공되므로 첫 번째 이미지를 사용
     date: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""), // 수정 날짜 업데이트
   };
 
@@ -88,6 +89,7 @@ exports.createPost = (postData) => {
     id: newId,
     title: postData.title,
     content: postData.content,
+    post_image: postData.post_image,
     author: postData.author,
     date: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
     views: 0,

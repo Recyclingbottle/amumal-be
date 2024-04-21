@@ -1,3 +1,133 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "id": 5,
+      "title": "새 게시글2113212",
+      "content": "게시글 내용입니다.3123123123",
+      "post_image": "1713709202798.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 14:20:04",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0,
+      "images": "1713708891724.jpg"
+    },
+    {
+      "id": 6,
+      "title": "새 게시글",
+      "content": "게시글 내용입니다.",
+      "post_image": "1713685555724.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 07:55:41",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    },
+    {
+      "id": 7,
+      "title": "새 게시글",
+      "content": "게시글 내용입니다.",
+      "post_image": "1713685555724.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 07:55:42",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    },
+    {
+      "id": 8,
+      "title": "새 게시글",
+      "content": "게시글 내용입니다.",
+      "post_image": "1713685555724.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 07:55:43",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    },
+    {
+      "id": 9,
+      "title": "새 게시글",
+      "content": "게시글 내용입니다.",
+      "post_image": "1713685555724.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 07:55:43",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    },
+    {
+      "id": 10,
+      "title": "새 게시글",
+      "content": "게시글 내용입니다.",
+      "post_image": "1713685555724.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 07:55:44",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    },
+    {
+      "id": 11,
+      "title": "게시글 작성 테스트",
+      "content": "게시글 작성 테스트 ",
+      "post_image": "1713687509224.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 08:18:29",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    },
+    {
+      "id": 12,
+      "title": "게시글게시글게시글게시글게시글",
+      "content": "게시글게시글게시글게시글게시글게시글게시글",
+      "post_image": "1713704737189.jpg",
+      "author": {
+        "email": "test01@gmail.com",
+        "nickname": "테스트",
+        "profileImage_path": "1713680139082.jpg"
+      },
+      "date": "2024-04-21 13:05:37",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
+    }
+  ]
 }
