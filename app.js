@@ -6,8 +6,11 @@ const jwtMiddleware = require("./middleware/jwtMiddleware"); // JWT 인증 미�
 const userRoutes = require("./routes/userRoutes"); // 사용자 관련 라우트
 const uploadRoutes = require("./routes/uploadRoutes"); // 파일 업로드 관련 라우트
 const postRoutes = require("./routes/postRoutes"); // 게시글 라우트 불러오기
-
+const cors = require("cors");
 const app = express();
+
+app.use(cors());
+
 app.use(bodyParser.json()); // JSON 요청 본문 처리
 
 // 기본 경로
