@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
   if (user) {
     // 사용자가 검증되면, 사용자 정보를 바탕으로 JWT 토큰 생성
     const tokenData = {
-      userId: user.email, // 사용자 ID 인데 제거해야하나 다른데서 불러왔을 수도 있으니 삭제하지 않음
+      userId: user.id, // 사용자 ID 인데 제거해야하나 다른데서 불러왔을 수도 있으니 삭제하지 않음 //아 근데 다른데서 써야함 어딘지 기억안나니 일단 이렇게 씀
       email: user.email, // 사용자 이메일
       nickname: user.nickname, // 사용자 닉네임
       profileImage: user.profile_image, // 사용자 프로필 이미지 경로
@@ -55,12 +55,8 @@ exports.login = async (req, res) => {
  * @param {Response} res - HTTP 응답
  */
 exports.signup = (req, res) => {
-  const {
-    email,
-    password,
-    nickname,
-    profile_image = "public/images/profile/default_profile_img.webp",
-  } = req.body;
+  console.log(req.body);
+  const { email, password, nickname, profile_image } = req.body;
 
   if (userModel.checkDuplicateEmail(email)) {
     return res
@@ -88,10 +84,10 @@ exports.signup = (req, res) => {
  */
 exports.checkEmailAvailability = (req, res) => {
   const available = !userModel.checkDuplicateEmail(req.query.email);
-  res.status(available ? HTTP_STATUS.OK : HTTP_STATUS.CONFLICT).json({
+  res.status(200).json({
     message: available
       ? "사용 가능한 이메일입니다."
-      : ERROR_MESSAGES.EMAIL_EXISTS,
+      : "이미 사용 중인 이메일입니다.",
   });
 };
 
@@ -102,10 +98,10 @@ exports.checkEmailAvailability = (req, res) => {
  */
 exports.checkNicknameAvailability = (req, res) => {
   const available = !userModel.checkDuplicateNickname(req.query.nickname);
-  res.status(available ? HTTP_STATUS.OK : HTTP_STATUS.CONFLICT).json({
+  res.status(200).json({
     message: available
       ? "사용 가능한 닉네임입니다."
-      : ERROR_MESSAGES.NICKNAME_EXISTS,
+      : "이미 사용 중인 닉네임입니다.",
   });
 };
 
