@@ -10,7 +10,84 @@
     "id": 2,
     "email": "test01@gmail.com",
     "password": "$2b$10$7T5Zj2WJavJ6caTsueKEKuvLeN4dljWkJy077dc/yE/kKf8BPpP9e",
-    "nickname": "TEST01",
+    "nickname": "닉네임112391",
     "profile_image": "1713680139082.jpg"
+  },
+  {
+    "id": 3,
+    "email": "test02@gmail.com",
+    "password": "$2b$10$87QsTv7Hl3xx5RCesTw17ut40pB1X2QDkNoJGnRO99XzGultaKwyC",
+    "nickname": "박원준",
+    "profile_image": "1713714134947.jpg"
+  },
+  {
+    "id": 4,
+    "email": "test01@naver.com",
+    "password": "$2b$10$A/cTU9.rlO23Mm8h8u5S2Oy4KcwuvZOnnXQlVJaPTdrM1FfFuji6y",
+    "nickname": "TEST012",
+    "profile_image": "1714012094082.jpg"
+  },
+  {
+    "id": 5,
+    "email": "test02@mail.com",
+    "password": "$2b$10$EFAXH5hmezZ5RrX8wRB49ullrTyxdAOZYCliTUz5sIZz12tuxLjxG",
+    "nickname": "테스트02수정",
+    "profile_image": "1714021503249.png"
+  },
+  {
+    "id": 6,
+    "email": "jobs@naver.com",
+    "password": "$2b$10$R1xQdUqaOfHdzWXYD7AL5emlCS2TN/3m2A1LAUMLKCpXVGbhlwA4S",
+    "nickname": "steve",
+    "profile_image": "1714021870756.jpeg"
+  },
+  {
+    "id": 7,
+    "email": "chen@hello.com",
+    "password": "$2b$10$33nGMBj97RvAUNKVh7bpkuZEH3/cSORqZTeLfo2ceXQSuiDL3Jp2u",
+    "nickname": "chenPark",
+    "profile_image": ""
+  },
+  {
+    "id": 8,
+    "email": "test03@mail.com",
+    "password": "$2b$10$WsMmbdKlcERCEBam6yA1auMTXUjc2KCYsSyDaR6/t1RY3vCdQi2f2",
+    "nickname": "TEST03",
+    "profile_image": "1714028144959.png"
+  },
+  {
+    "id": 9,
+    "email": "test05@mail.com",
+    "password": "$2b$10$mRvq8pW6LoaAGlVumXUvrOZwzJik07pg46V9gb6MOmUhVKJtKF4Hm",
+    "nickname": "test5",
+    "profile_image": "1714028574469.png"
+  },
+  {
+    "id": 10,
+    "email": "name1@name1.com",
+    "password": "$2b$10$K6KgSv11aKru3XNjm4mUCObKkav77lHSvqw4Na1/cr8XfGHhNYIfS",
+    "nickname": "nickna",
+    "profile_image": "1714028979727.jpeg"
+  },
+  {
+    "id": 11,
+    "email": "pqrs1234@gmail.com",
+    "password": "$2b$10$jKy3a22JKaBC5LMmOx93AeBmwHIClvB/AQB.C6Dv4DRYbyDhLjps2",
+    "nickname": "오하이요",
+    "profile_image": "1714029022412.jpeg"
+  },
+  {
+    "id": 12,
+    "email": "ariel@naver.com",
+    "password": "$2b$10$knBlMTJeA/Z.SHEXB6Hk7uYVc/TrRP4Al4xIdkiR.B196PqubqpYq",
+    "nickname": "ariel",
+    "profile_image": ""
+  },
+  {
+    "id": 13,
+    "email": "admin@gmail.com",
+    "password": "$2b$10$PztwQli744tHrGX4tzfyaOiwSFixWq87MiWz4Pfa5mJ2VMHCdgD6W",
+    "nickname": "실험용",
+    "profile_image": "1714029126241.png"
   }
 ]

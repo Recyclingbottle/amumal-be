@@ -128,6 +128,59 @@
       "likes": 0,
       "comments": [],
       "commentsCount": 0
+    },
+    {
+      "id": 13,
+      "title": "ㅎㅇ 나 잡스",
+      "content": "ㅋㅋㅎㅇㅋㅋㅋㅋ",
+      "post_image": "1714021990805.jpeg",
+      "author": {
+        "email": "jobs@naver.com",
+        "nickname": "steve",
+        "profileImage_path": "1714021870756.jpeg"
+      },
+      "date": "2024-04-25 05:13:14",
+      "views": 0,
+      "likes": 0,
+      "comments": [
+        {
+          "id": 1,
+          "author": {
+            "email": "jobs@naver.com",
+            "nickname": "steve",
+            "profileImage": "1714021870756.jpeg"
+          },
+          "content": "ㅎㅇㅎㅇㅎ",
+          "date": "2024-04-25T05:14:00.975Z"
+        },
+        {
+          "id": 2,
+          "author": {
+            "email": "chen@hello.com",
+            "nickname": "chenPark",
+            "profileImage": ""
+          },
+          "content": "잡스야 반갑다",
+          "date": "2024-04-25T05:17:47.872Z"
+        }
+      ],
+      "commentsCount": 0
+    },
+    {
+      "id": 14,
+      "title": "안녕하세요",
+      "content": "안녕하세요안녕하세요",
+      "post_image": "1714029043182.jpeg",
+      "author": {
+        "email": "name1@name1.com",
+        "nickname": "nickncik",
+        "profileImage_path": "1714028979727.jpeg"
+      },
+      "date": "2024-04-25 07:10:44",
+      "views": 0,
+      "likes": 0,
+      "comments": [],
+      "commentsCount": 0
     }
   ]
 }
