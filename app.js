@@ -32,6 +32,16 @@ app.get("/protected-route", jwtMiddleware.authenticateToken, (req, res) => {
   res.send("This is a protected route");
 });
 
+const session = require("express-session");
+app.use(
+  session({
+    secret: JWT_SECRET, // 환경 변수로부터 비밀키를 가져오세요
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }, // HTTPS 환경에서만 쿠키를 전송하도록 설정
+  })
+);
+
 // 에러 핸들링 미들웨어
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
