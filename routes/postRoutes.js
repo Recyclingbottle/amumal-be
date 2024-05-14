@@ -1,47 +1,31 @@
 const express = require("express");
 const postController = require("../controllers/postController");
-const { authenticateToken } = require("../middleware/jwtMiddleware"); // JWT 인증 미들웨어 가져오기
+const { authenticateSession } = require("../middleware/sessionMiddleware");
 const router = express.Router();
 
-// 모든 게시글을 조회하는 라우트, JWT 인증 추가
-router.get("/", authenticateToken, postController.listAllPosts);
-
-// 특정 게시글의 상세 정보를 조회하는 라우트, JWT 인증 추가
-router.get("/:postId", authenticateToken, postController.getPostDetails);
-
-// 게시글 추가 라우트
-router.post("/", authenticateToken, postController.createPost);
-
-// 게시글 삭제 라우트
-router.delete("/:postId", authenticateToken, postController.deletePost);
-
-// 게시글 수정 라우트
-router.patch("/:postId", authenticateToken, postController.editPost);
-
-// 댓글 추가
+router.get("/", authenticateSession, postController.listAllPosts);
+router.get("/:postId", authenticateSession, postController.getPostDetails);
+router.post("/", authenticateSession, postController.createPost);
+router.delete("/:postId", authenticateSession, postController.deletePost);
+router.patch("/:postId", authenticateSession, postController.editPost);
 router.post(
   "/:postId/comments",
-  authenticateToken,
+  authenticateSession,
   postController.addCommentToPost
 );
-//댓글 목록 가져오기
 router.get(
   "/:postId/comments",
-  authenticateToken,
+  authenticateSession,
   postController.getPostComments
 );
-
-// 댓글 수정 라우트
 router.patch(
   "/:postId/comments/:commentId",
-  authenticateToken,
+  authenticateSession,
   postController.editComment
 );
-
-// 댓글 삭제 라우트
 router.delete(
   "/:postId/comments/:commentId",
-  authenticateToken,
+  authenticateSession,
   postController.deleteComment
 );
 

@@ -1,12 +1,9 @@
 const express = require("express");
-const router = express.Router();
 const { uploadImage, saveImage } = require("../controllers/uploadController");
-const { authenticateToken } = require("../middleware/jwtMiddleware");
+const { authenticateSession } = require("../middleware/sessionMiddleware");
+const router = express.Router();
 
-// 프로필 이미지 업로드
 router.post("/profile", uploadImage, saveImage);
-
-// 게시글 이미지 업로드
-router.post("/post", authenticateToken, uploadImage, saveImage);
+router.post("/post", authenticateSession, uploadImage, saveImage);
 
 module.exports = router;
