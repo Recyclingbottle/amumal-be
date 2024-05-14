@@ -28,5 +28,10 @@ router.delete(
   authenticateSession,
   postController.deleteComment
 );
+router.post(
+  "/:postId/like",
+  authenticateSession,
+  postController.incrementLikeCount
+);
 
 module.exports = router;

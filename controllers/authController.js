@@ -1,4 +1,3 @@
-require("dotenv").config();
 const userModel = require("../models/userModel");
 
 const HTTP_STATUS = {
@@ -75,4 +74,22 @@ exports.checkLoginStatus = (req, res) => {
   } else {
     res.status(401).json({ message: "You are not logged in." });
   }
+};
+
+exports.checkEmailAvailability = (req, res) => {
+  const available = !userModel.checkDuplicateEmail(req.query.email);
+  res.status(200).json({
+    message: available
+      ? "사용 가능한 이메일입니다."
+      : "이미 사용 중인 이메일입니다.",
+  });
+};
+
+exports.checkNicknameAvailability = (req, res) => {
+  const available = !userModel.checkDuplicateNickname(req.query.nickname);
+  res.status(200).json({
+    message: available
+      ? "사용 가능한 닉네임입니다."
+      : "이미 사용 중인 닉네임입니다.",
+  });
 };

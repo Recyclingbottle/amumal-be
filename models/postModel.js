@@ -22,6 +22,16 @@ function writePosts(data) {
   }
 }
 
+// 조회수를 증가시키는 함수
+exports.incrementViewCount = (postId) => {
+  const postsData = readPosts();
+  const post = postsData.posts.find((post) => post.id === parseInt(postId));
+  if (post) {
+    post.views += 1;
+    writePosts(postsData);
+  }
+};
+
 // 댓글을 게시글에 추가하는 함수
 exports.addComment = (postId, commentData) => {
   const postsData = readPosts();
@@ -46,7 +56,7 @@ exports.addComment = (postId, commentData) => {
   return newComment;
 };
 
-//특정 게시글에 대한 댓글 가져오기
+// 특정 게시글에 대한 댓글 가져오기
 exports.getComments = (postId) => {
   const posts = readPosts();
   const post = posts.posts.find((post) => post.id === parseInt(postId));
@@ -168,4 +178,14 @@ exports.deleteComment = (postId, commentId, userEmail) => {
   post.comments.splice(commentIndex, 1);
   writePosts(data);
   return true;
+};
+
+// 좋아요 수를 증가시키는 함수
+exports.incrementLikeCount = (postId) => {
+  const postsData = readPosts();
+  const post = postsData.posts.find((post) => post.id === parseInt(postId));
+  if (post) {
+    post.likes += 1;
+    writePosts(postsData);
+  }
 };

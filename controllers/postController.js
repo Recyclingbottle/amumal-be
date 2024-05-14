@@ -1,5 +1,4 @@
 const postModel = require("../models/postModel");
-const { post } = require("../routes/userRoutes");
 
 /**
  * 모든 게시글의 목록을 조회하여 반환합니다.
@@ -27,6 +26,7 @@ exports.getPostDetails = (req, res) => {
     const post = postModel.getPostDetails(postId); // 특정 게시글 상세 정보 가져오기
 
     if (post) {
+      postModel.incrementViewCount(postId); // 조회수 증가
       res.json(post); // 조회된 게시글 정보 응답
     } else {
       res.status(404).send({ message: "게시글을 찾을 수 없습니다." });
@@ -184,4 +184,18 @@ exports.deleteComment = async (req, res) => {
   }
 
   res.json({ message: "댓글이 삭제되었습니다." });
+};
+
+// 좋아요 수 증가 요청 처리
+exports.incrementLikeCount = (req, res) => {
+  try {
+    const postId = parseInt(req.params.postId); // URL 파라미터에서 postId 추출
+    postModel.incrementLikeCount(postId); // 좋아요 수 증가
+    res.status(200).json({ message: "좋아요가 추가되었습니다." });
+  } catch (error) {
+    console.error("좋아요 수 증가 실패:", error);
+    res
+      .status(500)
+      .json({ message: "좋아요 수를 증가하는 중 오류가 발생했습니다." });
+  }
 };

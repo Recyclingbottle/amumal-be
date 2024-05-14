@@ -1,11 +1,11 @@
 const userModel = require("../models/userModel");
-const { authenticateToken } = require("../middleware/jwtMiddleware"); // JWT 인증 미들웨어
+const { authenticateSession } = require("../middleware/sessionMiddleware"); // 세션 인증 미들웨어
 
 /**
  * 사용자 정보를 업데이트하는 함수
  */
 exports.updateUser = [
-  authenticateToken, // JWT 인증
+  authenticateSession, // 세션 인증
   async (req, res) => {
     const { userId } = req.params; // URL에서 userId 추출
     const { nickname, profile_image } = req.body; // 요청 본문에서 데이터 추출
@@ -30,7 +30,7 @@ exports.updateUser = [
  * 사용자의 비밀번호를 변경하는 함수
  */
 exports.changeUserPassword = [
-  authenticateToken, // JWT 인증
+  authenticateSession, // 세션 인증
   async (req, res) => {
     const { userId } = req.params; // URL에서 userId 추출
     const { new_password } = req.body; // 요청 본문에서 데이터 추출
@@ -54,7 +54,7 @@ exports.changeUserPassword = [
  * 사용자를 삭제하는 함수
  */
 exports.deleteUser = [
-  authenticateToken, // JWT 인증
+  authenticateSession, // 세션 인증
   async (req, res) => {
     const { userId } = req.params; // URL에서 userId 추출
 
@@ -69,9 +69,11 @@ exports.deleteUser = [
   },
 ];
 
-// 사용자 정보를 업데이트하는 함수
+/**
+ * 사용자 정보를 업데이트하는 함수
+ */
 exports.updateUser = [
-  authenticateToken,
+  authenticateSession,
   async (req, res) => {
     const { userId } = req.params;
     const { nickname, profile_image } = req.body;
@@ -96,7 +98,9 @@ exports.updateUser = [
   },
 ];
 
-// 사용자 비밀번호를 변경하는 함수
+/**
+ * 사용자 비밀번호를 변경하는 함수
+ */
 exports.changePassword = async (userId, newPassword) => {
   const users = userModel.readUsers();
   const index = users.findIndex((user) => user.id === parseInt(userId));
@@ -115,7 +119,7 @@ exports.changePassword = async (userId, newPassword) => {
 
 // 사용자 정보 조회
 exports.getUser = [
-  authenticateToken, // JWT 인증
+  authenticateSession, // 세션 인증
   async (req, res) => {
     const { userId } = req.params; // URL에서 userId 추출
     try {
