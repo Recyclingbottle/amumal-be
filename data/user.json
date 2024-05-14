@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": 1,
+    "email": "example@example.com",
+    "password": "$2b$10$T4EKVOy2Nnhs259J3e3Cseqroepz3IfxolC.i.maD4Kr1HvdcJHeO",
+    "nickname": "newnickname",
+    "profile_image": "default_profile_img.webp"
+  }
+]

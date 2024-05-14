@@ -23,14 +23,20 @@ exports.login = async (req, res) => {
       id: user.id,
       email: user.email,
       nickname: user.nickname,
-      profileImage: user.profile_image,
+      profile_image: user.profile_image,
     };
 
-    res.status(HTTP_STATUS.OK).json({ message: "로그인 성공" });
+    res.status(200).json({
+      message: "로그인 성공",
+      user: {
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        profile_image: user.profile_image,
+      },
+    });
   } else {
-    res
-      .status(HTTP_STATUS.UNAUTHORIZED)
-      .json({ message: ERROR_MESSAGES.LOGIN_FAILED });
+    res.status(401).json({ message: "로그인 실패" });
   }
 };
 
