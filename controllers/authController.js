@@ -15,28 +15,37 @@ const ERROR_MESSAGES = {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await userModel.validateUser(email, password);
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.validateUser(email, password);
 
-  if (user) {
-    req.session.user = {
-      id: user.id,
-      email: user.email,
-      nickname: user.nickname,
-      profile_image: user.profile_image,
-    };
-
-    res.status(200).json({
-      message: "로그인 성공",
-      user: {
+    if (user) {
+      req.session.user = {
         id: user.id,
         email: user.email,
         nickname: user.nickname,
         profile_image: user.profile_image,
-      },
-    });
-  } else {
-    res.status(401).json({ message: "로그인 실패" });
+      };
+
+      res.status(200).json({
+        message: "로그인 성공",
+        user: {
+          id: user.id,
+          email: user.email,
+          nickname: user.nickname,
+          profile_image: user.profile_image,
+        },
+      });
+    } else {
+      res
+        .status(401)
+        .json({
+          message: "로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다.",
+        });
+    }
+  } catch (error) {
+    console.error("로그인 중 오류 발생:", error);
+    res.status(500).json({ message: "서버 오류" });
   }
 };
 

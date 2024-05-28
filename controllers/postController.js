@@ -116,12 +116,12 @@ exports.editPost = async (req, res) => {
 // 댓글 추가 요청 처리
 exports.addCommentToPost = async (req, res) => {
   const { postId } = req.params;
-  const { email, nickname, profileImage } = req.user; // JWT 토큰에서 사용자 정보 추출
+  const { email, nickname, profile_image } = req.user;
   const commentData = {
     author: {
       email,
       nickname,
-      profileImage,
+      profile_image,
     },
     content: req.body.content,
   };

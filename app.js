@@ -9,7 +9,12 @@ const cors = require("cors");
 const session = require("express-session");
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000", // 클라이언트 URL을 명시적으로 지정
+  credentials: true, // 쿠키와 세션을 허용하도록 설정
+};
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 
 app.use(

@@ -51,6 +51,7 @@ exports.addComment = (postId, commentData) => {
     date: new Date().toISOString(),
   };
   post.comments.push(newComment);
+  post.commentsCount += 1;
   writePosts(postsData);
   console.log("New comment added:", newComment);
   return newComment;
