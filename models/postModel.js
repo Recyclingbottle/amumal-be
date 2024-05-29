@@ -1,192 +1,153 @@
-const fs = require("fs");
-const path = require("path");
-const postsFilePath = path.join(__dirname, "..", "data", "post.json");
+const pool = require("../db");
 
-// 게시물 데이터를 읽어오는 함수
-function readPosts() {
-  try {
-    const data = fs.readFileSync(postsFilePath, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("게시물 데이터 읽기 실패:", error);
-    return []; // 오류 발생 시 빈 배열 반환
-  }
-}
-
-// 게시물 데이터를 저장하는 함수
-function writePosts(data) {
-  try {
-    fs.writeFileSync(postsFilePath, JSON.stringify(data, null, 2), "utf8");
-  } catch (error) {
-    console.error("게시물 데이터 쓰기 실패:", error);
-  }
-}
-
-// 조회수를 증가시키는 함수
-exports.incrementViewCount = (postId) => {
-  const postsData = readPosts();
-  const post = postsData.posts.find((post) => post.id === parseInt(postId));
-  if (post) {
-    post.views += 1;
-    writePosts(postsData);
-  }
+// 게시글 생성
+exports.createPost = async (postData) => {
+  const [result] = await pool.query(
+    "INSERT INTO Posts (title, content, image, user_id, created_at, view_count, like_count, comment_count) VALUES (?, ?, ?, ?, NOW(), 0, 0, 0)",
+    [postData.title, postData.content, postData.post_image, postData.author_id]
+  );
+  return result.insertId;
 };
 
-// 댓글을 게시글에 추가하는 함수
-exports.addComment = (postId, commentData) => {
-  const postsData = readPosts();
-  const post = postsData.posts.find((post) => post.id === parseInt(postId));
-  if (!post) {
-    console.log("No post found with ID:", postId);
-    return null; // 게시글이 존재하지 않을 경우
+// 게시글 목록 조회
+exports.getPostsForListing = async () => {
+  const [rows] = await pool.query(
+    `SELECT 
+      p.id, 
+      p.title, 
+      p.image AS post_image, 
+      u.email AS author_email, 
+      u.nickname AS author_nickname, 
+      u.profile_picture AS author_profile_image, 
+      p.created_at AS date, 
+      p.view_count AS views, 
+      p.like_count AS likes, 
+      (SELECT COUNT(*) FROM Comments c WHERE c.post_id = p.id) AS commentsCount 
+    FROM Posts p 
+    JOIN Users u ON p.user_id = u.id`
+  );
+  return rows;
+};
+
+// 게시글 상세 조회
+exports.getPostDetails = async (postId) => {
+  const [rows] = await pool.query(
+    `SELECT 
+      p.*, 
+      u.email AS author_email, 
+      u.nickname AS author_nickname, 
+      u.profile_picture AS author_profile_image 
+    FROM Posts p 
+    JOIN Users u ON p.user_id = u.id 
+    WHERE p.id = ?`,
+    [postId]
+  );
+  return rows[0];
+};
+
+// 게시글 삭제
+exports.deletePost = async (postId) => {
+  const [result] = await pool.query("DELETE FROM Posts WHERE id = ?", [postId]);
+  return result.affectedRows > 0;
+};
+
+// 게시글 수정
+exports.updatePost = async (postId, updateData) => {
+  const fields = [];
+  const values = [];
+
+  if (updateData.title) {
+    fields.push("title = ?");
+    values.push(updateData.title);
   }
 
-  const newCommentId =
-    post.comments.length > 0
-      ? Math.max(...post.comments.map((c) => c.id)) + 1
-      : 1;
-  const newComment = {
-    id: newCommentId,
-    ...commentData,
-    date: new Date().toISOString(),
-  };
-  post.comments.push(newComment);
-  post.commentsCount += 1;
-  writePosts(postsData);
-  console.log("New comment added:", newComment);
-  return newComment;
+  if (updateData.content) {
+    fields.push("content = ?");
+    values.push(updateData.content);
+  }
+
+  if (updateData.post_image) {
+    fields.push("image = ?");
+    values.push(updateData.post_image);
+  }
+
+  values.push(postId);
+
+  const query = `UPDATE Posts SET ${fields.join(", ")} WHERE id = ?`;
+  const [result] = await pool.query(query, values);
+
+  return result.affectedRows > 0;
 };
 
-// 특정 게시글에 대한 댓글 가져오기
-exports.getComments = (postId) => {
-  const posts = readPosts();
-  const post = posts.posts.find((post) => post.id === parseInt(postId));
-  return post ? post.comments : null;
+// 조회수 증가
+exports.incrementViewCount = async (postId) => {
+  const [result] = await pool.query(
+    "UPDATE Posts SET view_count = view_count + 1 WHERE id = ?",
+    [postId]
+  );
+  return result.affectedRows > 0;
 };
 
-// 게시글 수정 함수
-exports.updatePost = (postId, updateData) => {
-  const postsData = readPosts();
-  const postIndex = postsData.posts.findIndex(
-    (post) => post.id === parseInt(postId)
+// 좋아요 수 증가
+exports.incrementLikeCount = async (postId) => {
+  const [result] = await pool.query(
+    "UPDATE Posts SET like_count = like_count + 1 WHERE id = ?",
+    [postId]
+  );
+  return result.affectedRows > 0;
+};
+
+// 댓글 추가
+exports.addComment = async (postId, commentData) => {
+  const [result] = await pool.query(
+    "INSERT INTO Comments (post_id, user_id, content, created_at) VALUES (?, ?, ?, NOW())",
+    [postId, commentData.user_id, commentData.content]
+  );
+  return result.insertId;
+};
+
+// 댓글 목록 가져오기
+exports.getComments = async (postId) => {
+  const [rows] = await pool.query(
+    `SELECT 
+      c.*, 
+      u.email AS author_email, 
+      u.nickname AS author_nickname, 
+      u.profile_picture AS author_profile_image 
+    FROM Comments c 
+    JOIN Users u ON c.user_id = u.id 
+    WHERE c.post_id = ?`,
+    [postId]
+  );
+  return rows;
+};
+
+// 댓글 수정
+exports.editComment = async (postId, commentId, newContent, userEmail) => {
+  const [user] = await pool.query("SELECT id FROM Users WHERE email = ?", [
+    userEmail,
+  ]);
+  if (!user.length) return null;
+
+  const [result] = await pool.query(
+    "UPDATE Comments SET content = ? WHERE id = ? AND post_id = ? AND user_id = ?",
+    [newContent, commentId, postId, user[0].id]
   );
 
-  if (postIndex === -1) {
-    return null; // 게시글이 존재하지 않을 경우 null 반환
-  }
-
-  const post = postsData.posts[postIndex];
-  console.log(post);
-  // 제목, 내용, 사진 데이터를 업데이트
-  postsData.posts[postIndex] = {
-    ...post,
-    title: updateData.title || post.title,
-    content: updateData.content || post.content,
-    post_image: updateData.images ? updateData.images[0] : post.post_image, // 이미지가 리스트로 제공되므로 첫 번째 이미지를 사용
-    date: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""), // 수정 날짜 업데이트
-  };
-
-  writePosts(postsData); // 변경된 데이터 저장
-  return postsData.posts[postIndex];
+  return result.affectedRows > 0;
 };
 
-exports.createPost = (postData) => {
-  const data = readPosts();
-  const newId =
-    data.posts.length > 0
-      ? Math.max(...data.posts.map((post) => post.id)) + 1
-      : 1;
-  const newPost = {
-    id: newId,
-    title: postData.title,
-    content: postData.content,
-    post_image: postData.post_image,
-    author: postData.author,
-    date: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
-    views: 0,
-    likes: 0,
-    comments: [],
-    commentsCount: 0,
-  };
-  data.posts.push(newPost);
-  writePosts(data);
-  return newPost;
-};
+// 댓글 삭제
+exports.deleteComment = async (postId, commentId, userEmail) => {
+  const [user] = await pool.query("SELECT id FROM Users WHERE email = ?", [
+    userEmail,
+  ]);
+  if (!user.length) return false;
 
-exports.getPostsForListing = () => {
-  const data = readPosts();
-  return data.posts.map((post) => ({
-    id: post.id,
-    title: post.title,
-    author: post.author,
-    date: post.date,
-    views: post.views,
-    likes: post.likes,
-    commentsCount: post.comments.length,
-  }));
-};
-
-exports.getPostDetails = (id) => {
-  const data = readPosts();
-  const postId = parseInt(id); // ID를 정수로 변환
-  const post = data.posts.find((post) => post.id === postId);
-  return post || null; // 찾은 게시물이 없다면 null 반환
-};
-
-exports.deletePost = (postId) => {
-  const postsData = readPosts();
-  const postIndex = postsData.posts.findIndex((post) => post.id === postId);
-  if (postIndex === -1) {
-    return false; // 게시물을 찾지 못한 경우
-  }
-  postsData.posts.splice(postIndex, 1);
-  writePosts(postsData);
-  return true; // 게시물 삭제 성공
-};
-
-// readPosts와 writePosts 함수를 외부에서도 사용할 수 있게 내보내기
-exports.readPosts = readPosts;
-exports.writePosts = writePosts;
-
-// 댓글 수정 함수
-exports.editComment = (postId, commentId, newContent, userEmail) => {
-  const data = readPosts();
-  const post = data.posts.find((post) => post.id === parseInt(postId));
-  if (!post) return null;
-
-  const comment = post.comments.find(
-    (comment) => comment.id === parseInt(commentId)
+  const [result] = await pool.query(
+    "DELETE FROM Comments WHERE id = ? AND post_id = ? AND user_id = ?",
+    [commentId, postId, user[0].id]
   );
-  if (!comment || comment.author.email !== userEmail) return null;
 
-  comment.content = newContent;
-  writePosts(data);
-  return comment;
-};
-
-// 댓글 삭제 함수
-exports.deleteComment = (postId, commentId, userEmail) => {
-  const data = readPosts();
-  const post = data.posts.find((post) => post.id === parseInt(postId));
-  if (!post) return false;
-
-  const commentIndex = post.comments.findIndex(
-    (comment) =>
-      comment.id === parseInt(commentId) && comment.author.email === userEmail
-  );
-  if (commentIndex === -1) return false;
-
-  post.comments.splice(commentIndex, 1);
-  writePosts(data);
-  return true;
-};
-
-// 좋아요 수를 증가시키는 함수
-exports.incrementLikeCount = (postId) => {
-  const postsData = readPosts();
-  const post = postsData.posts.find((post) => post.id === parseInt(postId));
-  if (post) {
-    post.likes += 1;
-    writePosts(postsData);
-  }
+  return result.affectedRows > 0;
 };

@@ -17,8 +17,8 @@
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
     "localtunnel": "^1.8.3",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.8"
   },
-  "devDependencies": {},
   "description": ""
 }
